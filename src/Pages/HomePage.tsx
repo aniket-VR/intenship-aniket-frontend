@@ -6,6 +6,7 @@ import axios from "axios";
 import FilterContainer from "../Components/FilterContainer.tsx";
 import Navbar from "../Components/Navbar.tsx";
 import { toast } from "react-toastify";
+import { axiosC } from "../utils/connection.ts";
 interface UserInfo {
   first_name: String;
   last_name: String;
@@ -61,7 +62,7 @@ export default function HomePage() {
       toast.error("select the member");
       return;
     }
-    const result = await axios.post("http://localhost:8000/api/team", {
+    const result = await axiosC.post("/team", {
       name: teamName,
       member: finalMember,
     });
@@ -83,7 +84,7 @@ export default function HomePage() {
 
   async function callFirstTime() {
     setLoading(true);
-    const result = await axios.get("http://localhost:8000/api/users", {
+    const result = await axiosC.get("/users", {
       params: {
         limit: limit,
         ...filter,
